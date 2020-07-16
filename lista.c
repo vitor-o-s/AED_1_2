@@ -1,5 +1,3 @@
-#include<stdio.h>
-//#include<
 typedef struct node{
   int value;
   node *next;
@@ -12,34 +10,64 @@ void inicializa(List* l){
   l->head = NULL;
 }
 
+node* create_node(int value){
+  node *new;
+  new = (node*) malloc (sizeof(node));
+  if(new == NULL) return NULL;
+  new->value;
+  new->next = NULL;
+  return new;
+}
+
 int isvoid(List*l){
+  //Verifica se lista está vazia para fins de add
+  //Retorna 0 se vazia e 1 se contem elementos
   if (l->head == NULL) return 0;
   return 1;
 }
 
-void add(List *l, int v){
-  if(isvoid(l)==1){
-    node* aux;
-    while(aux!=NULL){
-
-    }
+int procurar(int value, Lista *l){
+  //Retorna 1 caso ja exista o valor do nó
+  //E 0 caso não seja encontrado
+  node* aux;
+  aux = l->head;
+  while(aux->value != value && aux!=NULL){
+    aux = aux->next;
   }
+  if(aux == NULL) return 0;
+  return 1;
+
 }
-/*Lista* criar_lista();
 
-Cell* criar_celula(int key);
+void add(List *l, int value){
+  //add no fim da lista
+  node* new = create_node(value);
+  if(isnull(l)==0){
+    l->head = new;
+    return;
+  }
+  node* aux = l->head;
 
-int lista_vazia(Lista *l);
+  while(aux->next!=NULL){
+    aux = aux->next;
+  }
+  aux->next = new;
+}
 
-int procurar(int key, Lista *l);
+int remover_da_lista(int key, Lista *l){
 
-int remover_na_lista(int key, Lista *l);
+  node * aux = l->head;
 
-void inserir_na_lista(int key, Lista *l);
+  while(aux->value != key && aux!=NULL){
+    aux = aux->next;
+  }
+
+}
 
 void imprimir(Lista *l);
 
-int liberar_lista(Lista *l);*/
+int liberar_lista(Lista *l);
+
 int main(void){
 
   return 0;
