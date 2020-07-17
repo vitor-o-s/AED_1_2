@@ -49,6 +49,8 @@ void add(List *l, int value){
   node* aux = l->head;
 
   while(aux->next!=NULL){
+    //não permite criação de valores repetidos
+    if(aux->value == value) return;
     aux = aux->next;
   }
   aux->next = new;
@@ -61,6 +63,7 @@ int remover_da_lista(int key, Lista *l){
   while(aux->value != key && aux!=NULL){
     aux = aux->next;
   }
+  //remove 
 
 }
 
