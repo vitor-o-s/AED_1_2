@@ -59,11 +59,21 @@ void add(List *l, int value){
 int remover_da_lista(int key, Lista *l){
 
   node * aux = l->head;
+  //remove cabeça
+  if(aux->value == key){
+    l->head = l->head->next;
+    free(aux);
+    return 1;
+  }
 
-  while(aux->value != key && aux!=NULL){
+  while(aux->next->value != key && aux->next!=NULL){
     aux = aux->next;
   }
-  //remove 
+  //remove resto
+  node *erase;
+  erase = aux->next;
+  aux->next = erase->next;
+  free(erase);
 
 }
 
