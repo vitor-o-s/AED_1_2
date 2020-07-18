@@ -31,12 +31,13 @@ int isvoid(List*l){
   return 1;
 }
 
-int procurar(int value, List *l){
+int procurar(List *l, int value){
   //Retorna 1 caso ja exista o valor do nó
   //E 0 caso não seja encontrado
   node* aux;
   aux = l->head;
-  while(aux->value != value && aux!=NULL){
+  while(aux!=NULL){
+    if(aux->value == value) return 1;
     aux = aux->next;
   }
   if(aux == NULL) return 0;
@@ -58,21 +59,24 @@ void add(List *l, int value){
     if(aux->value == value) return;
     aux = aux->next;
   }
+  if(aux->value == value) return;
   aux->next = new;
   return;
 }
 
-int remover_da_lista(List *l, int key){
+int remover_da_lista(List *l, int value){
+
+  //if(procurar(l, value)==0) return 0;
 
   node * aux = l->head;
   //remove cabeça
-  if(aux->value == key){
+  if(aux->value == value){
     l->head = l->head->next;
     free(aux);
     return 1;
   }
 
-  while(aux->next->value != key && aux->next!=NULL){
+  while(aux->next!=NULL  && aux->next->value!= value){
     aux = aux->next;
   }
   //remove resto
@@ -120,11 +124,13 @@ int main(void){
   add(L,9);
   add(L,10);
   add(L,11);
-  //add(L,11);
+  add(L,11);
+  add(L,1);
   imprimir(L);
+  //remover_da_lista(L,1);
   remover_da_lista(L,1);
   remover_da_lista(L,11);
-  //remover_da_lista(L,1);
+  //remover_da_lista(L,11);
   imprimir(L);
   liberar_lista(L);
   imprimir(L);
