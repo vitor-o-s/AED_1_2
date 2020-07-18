@@ -74,6 +74,7 @@ int remover_da_lista(int key, Lista *l){
   erase = aux->next;
   aux->next = erase->next;
   free(erase);
+  return 1;
 
 }
 
@@ -87,7 +88,16 @@ void imprimir(Lista *l){
 
 }
 
-int liberar_lista(Lista *l);
+int liberar_lista(Lista *l){
+
+  node *aux;
+  while(isvoid(l)!=0){
+    aux = l->head;
+    l->head = l->head->next;
+    free(aux);
+  }
+  return 1;
+}
 
 int main(void){
 
