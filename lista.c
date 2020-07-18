@@ -1,10 +1,13 @@
-typedef struct node{
+#include<stdlib.h>
+#include<stdio.h>
+
+typedef struct Node{
   int value;
-  node *next;
+  struct Node* next;
 }node;
 
-typedef struct List{
-  node *head;
+typedef struct list{
+  node* head;
 }List;
 
 
@@ -12,11 +15,11 @@ void inicializa(List* l){
   l->head = NULL;
 }
 
-node* create_node(int value){
+node * create_node(int value){
   node *new;
-  new = (node*) malloc (sizeof(node));
+  new = (node *) malloc (sizeof(node));
   if(new == NULL) return NULL;
-  new->value;
+  new->value = value;
   new->next = NULL;
   return new;
 }
@@ -44,7 +47,7 @@ int procurar(int value, List *l){
 void add(List *l, int value){
   //add no fim da lista
   node* new = create_node(value);
-  if(isnull(l)==0){
+  if(l->head==NULL){
     l->head = new;
     return;
   }
@@ -56,9 +59,10 @@ void add(List *l, int value){
     aux = aux->next;
   }
   aux->next = new;
+  return;
 }
 
-int remover_da_lista(int key, List *l){
+int remover_da_lista(List *l, int key){
 
   node * aux = l->head;
   //remove cabeça
@@ -84,7 +88,7 @@ void imprimir(List *l){
 
   node * aux = l->head;
   while(aux!=NULL){
-    printf("%d\t",aux->value);
+    printf(" %d\t",aux->value);
     aux = aux->next;
   }
 
@@ -102,6 +106,28 @@ int liberar_lista(List *l){
 }
 
 int main(void){
+
+  List *L = (List*) malloc (sizeof(List));
+  inicializa(L);
+  add(L,1);
+  add(L,2);
+  add(L,3);
+  add(L,4);
+  add(L,5);
+  add(L,6);
+  add(L,7);
+  add(L,8);
+  add(L,9);
+  add(L,10);
+  add(L,11);
+  //add(L,11);
+  imprimir(L);
+  remover_da_lista(L,1);
+  remover_da_lista(L,11);
+  //remover_da_lista(L,1);
+  imprimir(L);
+  liberar_lista(L);
+  imprimir(L);
 
   return 0;
 }
