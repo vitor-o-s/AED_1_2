@@ -77,7 +77,15 @@ int remover_da_lista(int key, Lista *l){
 
 }
 
-void imprimir(Lista *l);
+void imprimir(Lista *l){
+
+  node * aux = l->head;
+  while(aux!=NULL){
+    printf("%d\t",aux->value);
+    aux = aux->next;
+  }
+
+}
 
 int liberar_lista(Lista *l);
 
