@@ -1,10 +1,12 @@
 typedef struct node{
   int value;
   node *next;
-};
+}node;
+
 typedef struct List{
   node *head;
-};
+}List;
+
 
 void inicializa(List* l){
   l->head = NULL;
@@ -26,7 +28,7 @@ int isvoid(List*l){
   return 1;
 }
 
-int procurar(int value, Lista *l){
+int procurar(int value, List *l){
   //Retorna 1 caso ja exista o valor do nó
   //E 0 caso não seja encontrado
   node* aux;
@@ -56,7 +58,7 @@ void add(List *l, int value){
   aux->next = new;
 }
 
-int remover_da_lista(int key, Lista *l){
+int remover_da_lista(int key, List *l){
 
   node * aux = l->head;
   //remove cabeça
@@ -78,7 +80,7 @@ int remover_da_lista(int key, Lista *l){
 
 }
 
-void imprimir(Lista *l){
+void imprimir(List *l){
 
   node * aux = l->head;
   while(aux!=NULL){
@@ -88,7 +90,7 @@ void imprimir(Lista *l){
 
 }
 
-int liberar_lista(Lista *l){
+int liberar_lista(List *l){
 
   node *aux;
   while(isvoid(l)!=0){
