@@ -128,6 +128,7 @@ int main(void){
   imprimir(L);
   liberar_lista(L);
   imprimir(L);
+  free(L);
 
   return 0;
 }
