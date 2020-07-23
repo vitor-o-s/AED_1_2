@@ -1,24 +1,24 @@
 #include<stdio.h>
-#include<stdlib.h>
+
+void troca(int *a, int *b){
+  int aux;
+  aux = *a;
+  *a = *b;
+  *b = aux;
+}
 
 int separa(int v[], int left, int right){
-  int pivo = v[right]; //pivo
-  int aux, j = left, i;
+  int pivo = v[right];
+  int j = left, i;
 
   for(i = left; i < right; i++){
     if(v[i] <= pivo){
-      aux = v[j];
-      v[j] = v[i];
-      v[i] = aux;
+      troca(&v[j],&v[i]);
       j++;
     }
   }
-
-  aux = v[j];
-  v[j] = v[right];
-  v[right] = aux;
+  troca(&v[j], &v[right]);
   return j;
-
 }
 
 void Quicksort (int v[], int left, int right){
