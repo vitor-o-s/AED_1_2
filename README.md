@@ -2,14 +2,14 @@
 Repository to save codes that I made during my Computer Engineer graduate 
 
 
-This code were made based on [Paulo Feofiloff](https://www.ime.usp.br/~pf/) site and my own others references as a Computer Engineer and Data Scientist student.
+This code were made based on [Paulo Feofiloff site](https://www.ime.usp.br/~pf/) and my own others references as a Computer Engineer and Data Scientist student.
 
 # Getting Started
-
+You'll need an IDE or a compiler. I tried not use ADT (abstract data type) to maintain the execution simple, but if preferer you can use.
 
 # List of Algorithms
 
-## Sort ALgorithms
+## Sort Algorithms
 
 * [QuickSort](https://github.com/vitor-o-s/AED_1_2/blob/master/quick_sort.c)
 * [MergeSort](https://github.com/vitor-o-s/AED_1_2/blob/master/mergesort.c)
@@ -35,7 +35,7 @@ This code were made based on [Paulo Feofiloff](https://www.ime.usp.br/~pf/) site
 
 ## Authors
 
-* **Vitor O Santos** - *Initial work* - [Vitor O S](https://github.com/vitor-o-s)
+* **[Vitor O Santos](https://github.com/vitor-o-s)** - *Initial work* 
 
 ## License
 
