@@ -26,7 +26,7 @@ You'll need an IDE or a compiler. I tried not use ADT (abstract data type) to ma
 
 ## Recursion
 
-*[Fibonacci](https://github.com/vitor-o-s/AED_1_2/blob/master/fib.c)
+* [Fibonacci](https://github.com/vitor-o-s/AED_1_2/blob/master/fib.c)
 
 ## Dynamic Programming
 
