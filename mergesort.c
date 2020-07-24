@@ -1,48 +1,63 @@
 #include<stdio.h>
 #include<stdlib.h>
-//ATENÇÃO A IMPLEMENTAÇÃO DESSE CÓDIGO É REPRODUÇÃO
-//DO CÓDIGO FEITO PELO PROFº PAULO Feofiloff
+//ATENÇÃO esse cogido é uma adaptação
+//do código presente no site do Profº Paulo Feofiloff
 //Retirado em: https://www.ime.usp.br/~pf/algoritmos/aulas/mrgsrt.html#mergesort
-static void
-intercala1 (int p, int q, int r, int v[])
-{
-   int *w;                                 //  1
-   w = malloc ((r-p) * sizeof (int));      //  2
-   int i = p, j = q;                       //  3
-   int k = 0;                              //  4
+//
 
-   while (i < q && j < r) {                //  5
-      if (v[i] <= v[j])  w[k++] = v[i++];  //  6
-      else  w[k++] = v[j++];               //  7
-   }                                       //  8
-   while (i < q)  w[k++] = v[i++];         //  9
-   while (j < r)  w[k++] = v[j++];         // 10
-   for (i = p; i < r; ++i)  v[i] = w[i-p]; // 11
-   free (w);                               // 12
-}
+////Outra opção para função intercalar
 
-static void
-intercala2 (int p, int q, int r, int v[])
+// void intercala (int p, int q, int r, int v[])
+// {
+//    int *w;
+//    w = malloc ((r-p) * sizeof (int));
+//    int i = p, j = q;
+//    int k = 0;
+//
+//    while (i < q && j < r) {
+//       if (v[i] <= v[j])  w[k++] = v[i++];
+//       else  w[k++] = v[j++];
+//    }
+//    while (i < q)  w[k++] = v[i++];
+//    while (j < r)  w[k++] = v[j++];
+//    for (i = p; i < r; ++i)  v[i] = w[i-p];
+//    free (w);
+// }
+
+void intercala (int left, int mean, int right, int v[])
 {
    int i, j, *w;
-   w = malloc ((r-p) * sizeof (int));
+   w = malloc ((right-left) * sizeof (int));
 
-   for (i = p; i < q; ++i) w[i-p] = v[i];
-   for (j = q; j < r; ++j) w[r-p+q-j-1] = v[j];
-   i = 0; j = r-p-1;
-   for (int k = p; k < r; ++k)
+   for (i = left; i < mean; ++i) w[i-left] = v[i];
+   for (j = mean; j < right; ++j) w[right-left+mean-j-1] = v[j];
+   i = 0; j = right-left-1;
+   for (int k = left; k < right; ++k)
       if (w[i] <= w[j]) v[k] = w[i++];
       else v[k] = w[j--];
    free (w);
 }
 
-void
-mergesort (int p, int r, int v[])
-{
-   if (p < r-1) {                 // 1
-      int q = (p + r)/2;          // 2
-      mergesort (p, q, v);        // 3
-      mergesort (q, r, v);        // 4
-      intercala (p, q, r, v);     // 5
+void mergesort (int left, int right, int v[]){
+
+   if(left < right -1){
+
+      int mean = (left + right)/2;
+      mergesort (left, mean, v);
+      mergesort (mean, right, v);
+      intercala (left, mean, right, v);
    }
+}
+
+int main(void){
+
+  int vetor[10] = {5,2,4,3,6,7,10,8,1,9};
+  mergesort(0,10,vetor);
+
+  int i;
+  for(i=0; i<10; i++){
+    printf(" %d",vetor[i]);
+  }
+
+  return 0;
 }
