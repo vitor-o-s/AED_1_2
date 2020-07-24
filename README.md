@@ -1,10 +1,10 @@
-## Data Structure and Algorithms
+# Data Structure and Algorithms
 Repository to save codes that I made during my Computer Engineer graduate 
 
 
 This code were made based on [Paulo Feofiloff](https://www.ime.usp.br/~pf/) site and my own others references as a Computer Engineer and Data Scientist student.
 
-## Getting Started
+# Getting Started
 
 
 # List of Algorithms
