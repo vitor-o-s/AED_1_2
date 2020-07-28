@@ -68,11 +68,11 @@ leaf* insert(leaf *root, int value){
 int main(void){
 
   // Let us create following BST
-  //            50
-  //         /      |
-  //        30      70
-  //       /  \    / |
-  //     20   40  60 80
+  //         50
+  //        |  |
+  //       30  70
+  //      | |  | |
+  //     20 40 60 80
 
     tree *t = (tree*) malloc (sizeof(tree));
 
