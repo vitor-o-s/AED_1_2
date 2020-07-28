@@ -13,6 +13,7 @@ You'll need an IDE or a compiler. I tried not use ADT (abstract data type) to ma
 
 * [QuickSort](https://github.com/vitor-o-s/AED_1_2/blob/master/quick_sort.c)
 * [MergeSort](https://github.com/vitor-o-s/AED_1_2/blob/master/mergesort.c)
+* [InsertionSort](https://github.com/vitor-o-s/AED_1_2/blob/master/insertionsort.c)
 
 ## Graph Algorithms
 
