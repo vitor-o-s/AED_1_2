@@ -15,6 +15,7 @@ void init(tree* t){
   t->root = NULL;
 }
 
+// A utility function to create a new BST leaf
 leaf* create_leaf(int value){
   leaf *new = (leaf *) malloc (sizeof(leaf));
   if(new == NULL) return NULL;
@@ -23,47 +24,70 @@ leaf* create_leaf(int value){
   return new;
 }
 
-void inorder(leaf *root){    
+// A utility function to do inorder traversal of BST
+void inorder(leaf *root){
 
     if (root != NULL){
       inorder(root->left);
-        if(root->left == NULL && root->right == NULL){
-            printf(" %d", root->value);
-        }        
+      printf(" %d \t", root->value);
       inorder(root->right);
-    }    
+    }
 }
 
+leaf* search(leaf* root, int value){
+    // Base Cases: root is null or key is present at root
+    if (root == NULL || root->value == value)
+       return root;
+
+    // Key is greater than root's key
+    if (root->value < value)
+       return search(root->right, value);
+
+    // Key is smaller than root's key
+    return search(root->left, value);
+}
+
+// A utility function to insert a new node with given key in BST
 leaf* insert(leaf *root, int value){
 
+  // If the tree is empty, return a new node
   if (root == NULL) return create_leaf(value);
 
+  // Otherwise, recur down the tree
   if (value < root->value)
       root->left  = insert(root->left, value);
   else if (value > root->value)
       root->right = insert(root->right, value);
 
+  // return the (unchanged) node pointer
   return root;
 
 }
 
-int main() {
-    
-    int n;
-    scanf(" %d",&n);
+// Driver Program to test above functions
+int main(void){
+
+  // Let us create following BST
+  //            50
+  //         /      |
+  //        30      70
+  //       /  \    / |
+  //     20   40  60 80
 
     tree *t = (tree*) malloc (sizeof(tree));
+
     init(t);
-    int i, key;
-    scanf(" %d",&key);
-    t->root = insert(t->root, key);
-    
-    for(i=1; i<n; i++){
-        scanf(" %d",&key);
-        insert(t->root, key);
-    }
+
+    t->root = insert(t->root, 50);
+    insert(t->root, 30);
+    insert(t->root, 20);
+    insert(t->root, 40);
+    insert(t->root, 70);
+    insert(t->root, 60);
+    insert(t->root, 80);
+
+    // print inoder traversal of the BST
     inorder(t->root);
-    
+
     return 0;
 }
-
