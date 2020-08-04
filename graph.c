@@ -14,6 +14,7 @@ typedef struct Node{
 
 typedef struct list{
   node* head;
+  int n_vertex;
 }List;
 
 
@@ -80,9 +81,7 @@ void addV(List *l, int value){
   return;
 }
 
-int remover_da_lista(List *l, int value){
-
-  //if(procurar(l, value)==0) return 0;
+int removerV(List *l, int value){
 
   node * aux = l->head;
   //remove cabeça
@@ -95,6 +94,7 @@ int remover_da_lista(List *l, int value){
   while(aux->next!=NULL  && aux->next->value!= value){
     aux = aux->next;
   }
+
   //remove resto
   node *erase;
   erase = aux->next;
@@ -104,14 +104,41 @@ int remover_da_lista(List *l, int value){
 
 }
 
-/*void imprimirVertice(List *l){
+void w_removeE(List *l, int V, int E){
 
-  node * aux = l->head;
-  while(aux!=NULL){
-    printf(" %d\t",aux->value);
+  node* aux;
+  aux = l->head;
+  while(aux->value!=V){
     aux = aux->next;
   }
-}*/
+  edge* edge_aux = aux->edge_next;
+
+  if(edge_aux->value == E){
+    edge *erase;
+    erase = edge_aux->next;
+    edge_aux->next = erase->next;
+    free(erase);
+  }
+
+  while(edge_aux->next!=NULL && edge_aux->next->value!=E){
+    edge_aux = edge_aux->next;
+  }
+  if(edge_aux->next->value == E){
+    edge *erase;
+    erase = edge_aux->next;
+    edge_aux->next = erase->next;
+    free(erase);
+  }
+
+
+}
+
+int removerE(List *l, int v1, int v2){
+  if(procurarVertice(l,v1)==1 && procurarVertice(l,v2)==1){
+    w_removeE(l,v1,v2);
+    w_removeE(l,v2,v1);
+  }
+}
 
 void imprimirGrafo(List *l){
   node * aux = l->head;
@@ -159,7 +186,7 @@ void addA(List *l, int v1, int v2){
     w_add(l,v2,v1);
   }
 }
-
+/*
 int liberar_lista(List *l){
 
   node *aux;
@@ -169,7 +196,7 @@ int liberar_lista(List *l){
     free(aux);
   }
   return 1;
-}
+}*/
 
 int main(void){
 
@@ -187,8 +214,12 @@ int main(void){
   addV(L,10);
   addV(L,11);
   addA(L,1,2);
+  addA(L,1,3);
+  addA(L,2,3);
   imprimirGrafo(L);
-  free(L);
+  removerE(L,1,2);
+  imprimirGrafo(L);
+  //free(L);
 
   return 0;
 }
