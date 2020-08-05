@@ -23,15 +23,27 @@ leaf* create_leaf(int value){
   return new;
 }
 
-void inorder(leaf *root){    
+void inorder(leaf *root){
 
     if (root != NULL){
       inorder(root->left);
         if(root->left == NULL && root->right == NULL){
             printf(" %d", root->value);
-        }        
+        }
       inorder(root->right);
-    }    
+    }
+}
+
+int maior(int a, int b){
+  if(a > b) return a;
+  return b;
+}
+
+int altura(leaf *root){
+  //if(root->right == NULL || root->left == NULL) return 0;
+  //if() return 1;
+  if(root == NULL) return 0;
+  return  1 + maior(altura(root->left),altura(root->right));
 }
 
 leaf* insert(leaf *root, int value){
@@ -48,7 +60,7 @@ leaf* insert(leaf *root, int value){
 }
 
 int main() {
-    
+
     int n;
     scanf(" %d",&n);
 
@@ -57,13 +69,18 @@ int main() {
     int i, key;
     scanf(" %d",&key);
     t->root = insert(t->root, key);
-    
+
     for(i=1; i<n; i++){
         scanf(" %d",&key);
         insert(t->root, key);
     }
-    inorder(t->root);
-    
+    if(t->root!=NULL){
+
+      printf("%d\n",maior(altura(t->root->left),altura(t->root->right)));
+    }
+    else{
+      printf("0\n");
+    }
+
     return 0;
 }
-
