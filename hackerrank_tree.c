@@ -82,5 +82,25 @@ int main() {
       printf("0\n");
     }
 
+    //VERIFICAÇÃO AVL
+
+    // if(t->root==NULL){
+    //     //Se só existe raiz está balanceada
+    //     printf("0\n");
+    // }
+    // else{
+    //     //Se existe folhas em ambos lados
+    //    int  h_l = altura(t->root->left);
+    //    int  h_r= altura(t->root->right);
+    //    int resultado = h_l - h_r;
+    //     if(resultado>1 || resultado <-1){
+    //         printf("0\n");
+    //     }
+    //     else{
+    //         printf("1\n");
+    //     }
+    // }
+
+
     return 0;
 }
