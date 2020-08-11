@@ -33,3 +33,29 @@ int main() {
 
     return 0;
 }
+/*
+int tamanho,i,j,todos0,todos1;
+    todos0=1;
+    todos1=1;
+  
+    for(i=0;i<tamanho;i++)
+    {
+        for(j=0;j<tamanho;j++)
+        {
+            if(matriz[i][j]!=0 && i!=j)
+            {
+                todos0=0;
+            }
+            if(matriz[i][j]!=1 && i!=j)
+            {
+                todos1=0;
+            }
+        }
+    }
+    if(todos0==1 || todos1==1)
+        printf("sim\n");
+    else
+        printf("nao\n");
+    return 0;
+
+*/
