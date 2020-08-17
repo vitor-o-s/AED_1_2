@@ -27,9 +27,10 @@ void inorder(leaf *root){
 
     if (root != NULL){
       inorder(root->left);
-        if(root->left == NULL && root->right == NULL){
+        //condição nescessaria somente para printar nós folhas
+        //if(root->left == NULL && root->right == NULL){
             printf(" %d", root->value);
-        }
+        //}
       inorder(root->right);
     }
 }
@@ -40,8 +41,6 @@ int maior(int a, int b){
 }
 
 int altura(leaf *root){
-  //if(root->right == NULL || root->left == NULL) return 0;
-  //if() return 1;
   if(root == NULL) return 0;
   return  1 + maior(altura(root->left),altura(root->right));
 }
@@ -61,7 +60,7 @@ leaf* insert(leaf *root, int value){
 
 int main() {
 
-    int n;
+    int n, h_left = 0, h_right = 0, resultado = 0;
     scanf(" %d",&n);
 
     tree *t = (tree*) malloc (sizeof(tree));
@@ -74,32 +73,29 @@ int main() {
         scanf(" %d",&key);
         insert(t->root, key);
     }
-    if(t->root!=NULL){
 
-      printf("%d\n",maior(altura(t->root->left),altura(t->root->right)));
+    if(t->root==NULL){
+        //Se só existe raiz está balanceada
+        printf("1\n");
     }
+
+
     else{
-      printf("0\n");
+        if(t->root->left!=NULL){
+            h_left = altura(t->root->left);
+        }
+        if(t->root->right!=NULL){
+            h_right = altura(t->root->right);
+        }
+        resultado = h_left - h_right;
+        //printf("%d %d %d\n",h_l,h_r,resultado);
+        if(resultado>1 || resultado <=-1){
+            printf("0\n");
+        }
+        else{
+            printf("1\n");
+        }
     }
-
-    //VERIFICAÇÃO AVL
-
-    // if(t->root==NULL){
-    //     //Se só existe raiz está balanceada
-    //     printf("0\n");
-    // }
-    // else{
-    //     //Se existe folhas em ambos lados
-    //    int  h_l = altura(t->root->left);
-    //    int  h_r= altura(t->root->right);
-    //    int resultado = h_l - h_r;
-    //     if(resultado>1 || resultado <-1){
-    //         printf("0\n");
-    //     }
-    //     else{
-    //         printf("1\n");
-    //     }
-    // }
 
 
     return 0;
