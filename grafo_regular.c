@@ -1,14 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int max(int vet[], int n){
+  int i, max = 0;
+  for (i = 0; i <n; i++){
+    if(vet[i]>max) max = vet[i];
+  }
+  return max;
+}
+
+int min(int vet[], int n){
+  int i, min = 1000;
+  for (i = 0; i <n; i++){
+    if(vet[i]<min) min = vet[i];
+  }
+  return min;
+}
+
 void regular(int vet[], int n){
-    int i;
-    for(i=1;i<n;i++){
-        if(vet[i]!=vet[i-1]){
+
+        if(max(vet,n)!=min(vet,n)){
             printf("nao\n");
             return;
         }
-    }
+
     printf("sim\n");
     return;
 }
@@ -37,7 +52,7 @@ int main() {
 int tamanho,i,j,todos0,todos1;
     todos0=1;
     todos1=1;
-  
+
     for(i=0;i<tamanho;i++)
     {
         for(j=0;j<tamanho;j++)
