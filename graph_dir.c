@@ -98,7 +98,7 @@ void w_add(List *l, int V, int A){
   return;
 }
 
-void matrix_adj(List *l, int n){
+void direcionado(List *l, int n){
 
   node *aux = l->head;
   edge *edge_aux;
@@ -125,40 +125,23 @@ void matrix_adj(List *l, int n){
     aux = aux->next;
     i++;
   }
-
-
-  for(i=0; i<n; i++){
-    for(j=0; j<n; j++){
-      printf("%d ",M[i][j]);
+  for(i=0;i<n;i++){
+    for(j=0;j<n;j++){
+      if(M[i][j]!=M[j][i]){
+        printf("nao direcionado\n");
+        return;
+      }
     }
-    printf("\n");
   }
+  printf("direcionado\n");
   return;
 }
+
 int main(void){
 
   int n, i, edge;
   scanf(" %d",&n);
   List *L = (List*) malloc (sizeof(List));
-  List *L2 = (List*) malloc (sizeof(List));
-  inicializa(L2);
-  addV(L2,0);
-  addV(L2,1);
-  addV(L2,2);
-  addV(L2,3);
-  addV(L2,4);
-  w_add(L2,0,1);
-  w_add(L2,0,2);
-  w_add(L2,1,0);
-  w_add(L2,1,4);
-  w_add(L2,2,0);
-  w_add(L2,2,3);
-  w_add(L2,2,4);
-  w_add(L2,3,2);
-  w_add(L2,3,4);
-  w_add(L2,4,1);
-  w_add(L2,4,2);
-  w_add(L2,4,3);
 
   inicializa(L);
   for(i=0;i<n;i++)
@@ -169,7 +152,6 @@ int main(void){
     while (scanf("%c",&buffer)==1 && buffer!='\n'){
 
       if(buffer!=' '){
-        printf("%d %d\n",i,buffer);
         edge = buffer - '0';
         if(edge!=-1){
           w_add(L,i,edge);
@@ -177,12 +159,7 @@ int main(void){
       }
     }
   }
-
-  imprimirGrafo(L);
-  printf("\n");
-  imprimirGrafo(L2);
-  printf("\n");
-  matrix_adj(L2,n);
+  direcionado(L,n);
 
   return 0;
 }
