@@ -1,15 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void verifica(int n, int matriz[n][n],int v1, int v2){
-  if(matriz[v1][v2]==0){
-    printf("nao\n");
-    return;
-  }
-  printf("sim\n");
-  return;
-}
+int verifica(int n, int matriz[n][n],int v1, int v2){
+  if(matriz[v1][v2]==0)  return 0;
+  return 1;
 
+}
 int main() {
 
     int n, i, j, v1=0, v2=0;
@@ -20,8 +16,16 @@ int main() {
             scanf(" %d",&adj[i][j]);
         }
     }
+
     while (scanf(" %d %d",&v1,&v2)==2){
-      verifica(n,adj,v1,v2);
+        if(verifica(n,adj,v1,v2)==1 || verifica(n,adj,v2,v1)==1){
+            printf("sim\n");
+        }
+        else{
+            printf("nao\n");
+        }
+
     }
+
     return 0;
 }
