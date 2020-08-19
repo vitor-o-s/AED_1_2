@@ -9,12 +9,12 @@ typedef struct Leaf{
 
 typedef struct Tree{
   leaf *root;
-  //int balanceamento;
+  int balanceamento;
 }tree;
 
 void init(tree* t){
   t->root = NULL;
-  //t->balanceamento = 0;
+  t->balanceamento = 1;
 }
 
 leaf* create_leaf(int value){
@@ -48,6 +48,27 @@ leaf* insert(leaf *root, int value){
   return root;
 }
 
+void calcula_balanceamento(leaf *root){
+  if(root!=NULL){
+    int altura_esq = altura(root->left);
+    int altura_dir = altura(root->right);
+    root->fator_balanceamento = altura_esq - altura_dir;
+    calcula_balanceamento(root->left);
+    calcula_balanceamento(root->right);
+  }
+}
+
+void AVL(leaf *root, tree *t){
+  if (root != NULL){
+    if(root->fator_balanceamento>1 || root->fator_balanceamento<-1){
+      t->balanceamento = 0;
+      return;
+    }
+    AVL(root->left,t);
+    AVL(root->right,t);
+  }
+}
+
 int main(void) {
 
     int n;
@@ -64,55 +85,9 @@ int main(void) {
         insert(t->root, key);
     }
 
+    calcula_balanceamento(t->root);
+    AVL(t->root,t);
+    printf("%d\n",t->balanceamento);
+
     return 0;
 }
-
-/*
-
-void balanceamentoFolha(Arvore *t,Folha *f)
-{
-    int esquerda=altura(f->sae);
-    int direita=altura(f->sad);
-    f->balanceamento=direita-esquerda;
-    if(f->balanceamento>1 || f->balanceamento<-1)
-        t->AVL=0;
-}
-
-void balanceamentoArvore(Arvore *t,Folha *root)
-{
-    if(root==NULL);
-    else
-    {
-        balanceamentoFolha(t,root);
-        if(root->sae==NULL);
-        else
-        {
-            balanceamentoFolha(t,root->sae);
-            balanceamentoArvore(t,root->sae);
-        }
-        if(root->sad==NULL);
-        else
-        {
-            balanceamentoFolha(t,root->sad);
-            balanceamentoArvore(t,root->sad);
-        }
-    }
-}
-
-
-
-int main()
-{
-    int insercoes,i,insert;
-    Arvore *t=novaArvore();
-    scanf("%d",&insercoes);
-    for(i=0;i<insercoes;i++)
-    {
-        scanf("%d",&insert);
-        insertBinario(t,t->root,insert);
-    }
-    balanceamentoArvore(t,t->root);
-    printf("%d\n",t->AVL);
-    return 0;
-}
-*/

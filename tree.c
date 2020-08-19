@@ -74,17 +74,30 @@ int main(void){
   //       /  \    / |
   //     20   40  60 80
 
+    // tree *t = (tree*) malloc (sizeof(tree));
+    //
+    // init(t);
+    //
+    // t->root = insert(t->root, 50);
+    // insert(t->root, 30);
+    // insert(t->root, 20);
+    // insert(t->root, 40);
+    // insert(t->root, 70);
+    // insert(t->root, 60);
+    // insert(t->root, 80);
+    int n;
+    scanf(" %d",&n);
+
     tree *t = (tree*) malloc (sizeof(tree));
-
     init(t);
+    int i, key;
+    scanf(" %d",&key);
+    t->root = insert(t->root, key);
 
-    t->root = insert(t->root, 50);
-    insert(t->root, 30);
-    insert(t->root, 20);
-    insert(t->root, 40);
-    insert(t->root, 70);
-    insert(t->root, 60);
-    insert(t->root, 80);
+    for(i=1; i<n; i++){
+        scanf(" %d",&key);
+        insert(t->root, key);
+    }
 
     // print inoder traversal of the BST
     inorder(t->root);
