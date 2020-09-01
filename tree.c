@@ -67,24 +67,7 @@ leaf* insert(leaf *root, int value){
 // Driver Program to test above functions
 int main(void){
 
-  // Let us create following BST
-  //            50
-  //         /      |
-  //        30      70
-  //       /  \    / |
-  //     20   40  60 80
-
-    // tree *t = (tree*) malloc (sizeof(tree));
-    //
-    // init(t);
-    //
-    // t->root = insert(t->root, 50);
-    // insert(t->root, 30);
-    // insert(t->root, 20);
-    // insert(t->root, 40);
-    // insert(t->root, 70);
-    // insert(t->root, 60);
-    // insert(t->root, 80);
+    
     int n;
     scanf(" %d",&n);
 
