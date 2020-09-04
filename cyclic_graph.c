@@ -1,32 +1,56 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-void cyclic(int n, int adj_matrix[n][n]){
-  //se é
-  printf("ciclico\n");
-  //se não
-  printf("aciclico\n");
-}
-/*
-code from: https://www.thedailyprogrammer.com/2015/03/depth-first-search-adjacency-matrix.html
-int visited[20];
-void DFS(int i)
-{
-    int j;
-    visited[i]=1;
-    //printf(" %d->",i+1);
-    for(j=0;j<V;j++)
-    {
-        if(G[i][j]==1&&visited[j]==0)
-            DFS(j);
+#define BRANCO 2
+#define CINZA  1
+#define PRETO  0
+#define marca u.I
+
+/*ENTRADAS TESTES
+4
+0 1 1 0
+1 0 0 0
+1 0 0 1
+0 0 1 0
+aciclico
+
+4
+0 1 1 0
+1 0 0 0
+1 0 0 1
+0 0 1 0
+ciclico
+*/
+
+int DFS(int v, int n, int adj_matrix[n][n], int cor[n]){
+  int j;
+  for(j = 0; j < n; j++){
+    if(adj_matrix[v][j]==1){
+      if(cor[j] == PRETO) continue;
+      if(cor[j] == CINZA) return 1;
+      cor[j] = CINZA;
+      if(DFS(j, n, adj_matrix, cor) == 1) return 1;
     }
+  }
+
+  cor[v] = PRETO;
+  return 0;
+
 }
-int main()
-{
-    for(i=0;i<n;i++)
-      DFS(source-1);
-    return 0;
-}*/
+
+int tem_ciclo(int n, int adj_matrix[n][n]){
+  //1 tem um ciclo
+  //0 não possui
+  int i, cor[n];
+  for(i=0;i<n;i++)
+    cor[i] = BRANCO;
+  for(i=0;i<n;i++){
+    if(cor[i]==PRETO) continue;
+    cor[i] = CINZA;
+    if (DFS(i, n, adj_matrix, cor) == 1) return 1;
+  }
+  return 0;
+}
 
 int main(void) {
   int i, j, n;
@@ -37,7 +61,18 @@ int main(void) {
       scanf(" %d",&adj_matrix[i][j]);
     }
   }
-  cyclic(n,adj_matrix);
+  if(tem_ciclo(n,adj_matrix)==0){
+    printf("aciclico\n");
+  }
+  else{
+    printf("ciclico\n");
+  }
 
   return 0;
 }
+
+/*
+i
+
+
+*/
