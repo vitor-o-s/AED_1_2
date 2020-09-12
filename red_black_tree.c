@@ -62,22 +62,26 @@ leaf* grandp(leaf *root){
 leaf* rot_right(leaf *root){
   leaf *p = root->parent, *g = p->parent;
 
-  p->parent = g->parent;
-  g->parent = p;
   g->left   = p->right;
   p->right  = g;
+  p->parent = g->parent;
+  g->parent = p;
+
+  //printf("valor de p:%d, valor de root:%d\n",p->value,root->value);
 
   root = p;
+  //printf("valor de p:%d, valor de root:%d\n",p->value,root->value);
   return root;
 }
 
 leaf* rot_left(leaf *root){
   leaf *p = root->parent, *g = p->parent;
 
-  p->parent = g->parent;
-  g->parent = p;
   g->right  = p->left;
   p->left   = g;
+  p->parent = g->parent;
+  g->parent = p;
+
 
   root = p;
   return root;
@@ -86,10 +90,10 @@ leaf* rot_left(leaf *root){
 leaf* rot_right_left(leaf *root){
   leaf *p = root->parent, *g = p->parent;
 
-  root->parent = p->parent;
-  p->parent    = root;
   p->left      = root->right;
   root->right  = p;
+  root->parent = p->parent;
+  p->parent    = root;
 
   return rot_left(p);
 }
@@ -97,21 +101,22 @@ leaf* rot_right_left(leaf *root){
 leaf* rot_left_right(leaf *root){
   leaf *p = root->parent, *g = p->parent;
 
-  root->parent = p->parent;
-  p->parent    = root;
   p->right     = root->left;
   root->left   = p;
+  root->parent = p->parent;
+  p->parent    = root;
 
   return rot_right(p);
 }
 
-void balance(leaf* root){
+leaf* balance(leaf* root){
 
   leaf *p, *u; //parente, uncle
 
   if(root->parent == NULL){ //case 1
     //printf("entrou caso 1\n");
     root->color = BLACK;
+
   }
   else{
     p = root->parent;
@@ -123,11 +128,12 @@ void balance(leaf* root){
       if((u != NULL) && (u->color == RED)){//case 2
         //printf("entrou caso 2\n");
         p->color = u->color = BLACK;
-        //printf("valor pai: %d cor: %d valor do tio:%d cor:%d\n", p->value, p->color,u->value,u->color);
         root = grandp(root);
 
         if(root->parent != NULL)
-        root->color = RED;
+          root->color = RED;
+
+
       }
 
       else{//case 3
@@ -135,11 +141,11 @@ void balance(leaf* root){
           if(p->parent->right == p){
             //printf("entrou caso 3c\n");
             rot_right_left(root);//case 3c
-            //inorder(root);
+
           }
           else{
             //printf("entrou caso 3a\n");
-            rot_right(root); //case 3
+            rot_right(root); //case 3a
           }
         }
         else{
@@ -152,53 +158,58 @@ void balance(leaf* root){
             rot_left(root); //case 3b
           }
         }
-        //printf("fazendo pintura dos nós\n");
-      //  printf("%d %d\n",root->value,root->parent->value);
-        root->color = BLACK;
-        if(root->left  != NULL) root->left->color  = RED;
-        if(root->right != NULL)root->right->color = RED;
-        //printf("saiu balance\n");
 
+        //printf("fazendo pintura dos nós\n");
+        //printf("valor de root:%d, valor pai:%d\n",root->value,root->parent->value);
+        root->parent->color = BLACK;
+        if(root->parent->left  != NULL) root->parent->left->color  = RED;
+        if(root->parent->right != NULL) root->parent->right->color = RED;
+        //inorder(root->parent);
+        return root->parent;
       }
     }
   }
-
+  return root;
 }
 
 leaf* insert(leaf* root, int value){
 
-  leaf *auxP, *auxF;
+  leaf *auxP, *aux;
 
   if (root == NULL){
       return create_leaf(value);
   }
 
   else{
-    auxP = auxF = root;
+    //auxParent, aux = new
+    auxP = aux = root;
 
-    while (auxF != NULL){
-      auxP = auxF;
+    while (aux != NULL){
+      auxP = aux;
 
-      if (value < auxF->value)
-      auxF = auxF->left;
-      else
-      auxF = auxF->right;
+      if(value < aux->value) aux = aux->left;
+      else aux = aux->right;
     }
 
-    auxF = create_leaf(value);
-    auxF->parent = auxP;
+    aux = create_leaf(value);
+    aux->parent = auxP;
 
-    if (auxF->value < auxP->value)
-    auxP->left = auxF;
-    else
-    auxP->right = auxF;
+    if(aux->value < auxP->value) auxP->left = aux;
+    else auxP->right = aux;
 
-    while ((auxF->parent != NULL)  && (auxF->color == RED) && (auxF->parent->color == RED)){
+    while ((aux->parent != NULL)  && (aux->color == RED) && (aux->parent->color == RED)){
       //printf("entrou balance\n");
-      balance(auxF);
+      aux = balance(aux);
+      //printf("\nvalor aux:%d\nsaiu balance\n",aux->value);
+      //inorder(root->parent);
     }
 
   }
+
+  //printf("\nvalor root:%d\n",root->value);
+  while (aux->parent != NULL) aux = aux->parent;
+  if(aux != root) root = aux;
+  //printf("\nvalor aux:%d valor root:%d\n",aux->value,root->value);
   return root;
 }
 
@@ -207,8 +218,6 @@ int bh(leaf* root){
   if(root->color == BLACK) return 1 + bh(root->left);
   return bh(root->left);
 }
-
-
 
 int main(void){
 
@@ -225,9 +234,12 @@ int main(void){
 
   for(i=1; i<n; i++){
       scanf(" %d",&key);
-      insert(t->root, key);
+      t->root = insert(t->root, key);
   }
 
+  //printf("\nt->root:%d\n", t->root->value);
+
+  //printf("\ninorder main:");
   //inorder(t->root);
   printf("%d\n",bh(t->root));
 
