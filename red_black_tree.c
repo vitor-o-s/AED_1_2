@@ -64,6 +64,15 @@ leaf* rot_right(leaf *root){
 
   g->left   = p->right;
   p->right  = g;
+  if(g->parent != NULL){
+    if(g->parent->left == g){
+      g->parent->left = p;
+    }
+    else{
+      g->parent->right = p;
+    }
+  }
+
   p->parent = g->parent;
   g->parent = p;
 
@@ -79,6 +88,17 @@ leaf* rot_left(leaf *root){
 
   g->right  = p->left;
   p->left   = g;
+
+  if(g->parent != NULL){
+    if(g->parent->right == g){
+      g->parent->right = p;
+    }
+    else{
+      g->parent->left = p;
+    }
+  }
+
+
   p->parent = g->parent;
   g->parent = p;
 
@@ -92,6 +112,13 @@ leaf* rot_right_left(leaf *root){
 
   p->left      = root->right;
   root->right  = p;
+  if (g->left == p)
+      g->left = root;
+  else
+  {
+      g->right = root;
+  }
+
   root->parent = p->parent;
   p->parent    = root;
 
@@ -103,6 +130,12 @@ leaf* rot_left_right(leaf *root){
 
   p->right     = root->left;
   root->left   = p;
+  if (g->left == p)
+      g->left = root;
+  else
+  {
+      g->right = root;
+  }
   root->parent = p->parent;
   p->parent    = root;
 
@@ -118,6 +151,7 @@ leaf* balance(leaf* root){
     root->color = BLACK;
 
   }
+
   else{
     p = root->parent;
 
@@ -132,41 +166,40 @@ leaf* balance(leaf* root){
 
         if(root->parent != NULL)
           root->color = RED;
-
-
       }
 
       else{//case 3
         if(p->left == root){
           if(p->parent->right == p){
             //printf("entrou caso 3c\n");
-            rot_right_left(root);//case 3c
+            root = rot_right_left(root);//case 3c
 
           }
           else{
             //printf("entrou caso 3a\n");
-            rot_right(root); //case 3a
+            root = rot_right(root); //case 3a
           }
         }
         else{
-          if(p->parent->right == p){
+          if(p->parent->left == p){
             //printf("entrou caso 3d\n");
-            rot_left_right(root);//case 3d
+            root = rot_left_right(root);//case 3d
           }
           else{
             //printf("entrou caso 3b\n");
-            rot_left(root); //case 3b
+            root = rot_left(root); //case 3b
           }
         }
 
         //printf("fazendo pintura dos nós\n");
         //printf("valor de root:%d, valor pai:%d\n",root->value,root->parent->value);
-        root->parent->color = BLACK;
-        if(root->parent->left  != NULL) root->parent->left->color  = RED;
-        if(root->parent->right != NULL) root->parent->right->color = RED;
+        root->color = BLACK;
+        if(root->left  != NULL) root->left->color  = RED;
+        if(root->right != NULL) root->right->color = RED;
         //inorder(root->parent);
-        return root->parent;
+        //return root->parent;
       }
+
     }
   }
   return root;
