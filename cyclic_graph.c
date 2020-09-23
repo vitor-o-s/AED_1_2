@@ -4,32 +4,18 @@
 #define BRANCO 2
 #define CINZA  1
 #define PRETO  0
-#define marca u.I
 
-/*ENTRADAS TESTES
-4
-0 1 1 0
-1 0 0 0
-1 0 0 1
-0 0 1 0
-aciclico
-
-4
-0 1 1 0
-1 0 0 0
-1 0 0 1
-0 0 1 0
-ciclico
-*/
-
-int DFS(int v, int n, int adj_matrix[n][n], int cor[n]){
+int DFS(int v, int n, int adj_matrix[n][n], int cor[n], int tempo, int descoberta[n]){
   int j;
+  tempo = tempo + 1;
+  descoberta[v] = tempo;
   for(j = 0; j < n; j++){
     if(adj_matrix[v][j]==1){
       if(cor[j] == PRETO) continue;
-      if(cor[j] == CINZA) return 1;
+      if(cor[j] == CINZA || (descoberta[v]  - descoberta[j]) > 2) return 1;
+      descoberta[j] = tempo;
       cor[j] = CINZA;
-      if(DFS(j, n, adj_matrix, cor) == 1) return 1;
+      DFS(j, n, adj_matrix, cor, tempo, descoberta);
     }
   }
 
@@ -41,13 +27,16 @@ int DFS(int v, int n, int adj_matrix[n][n], int cor[n]){
 int tem_ciclo(int n, int adj_matrix[n][n]){
   //1 tem um ciclo
   //0 não possui
-  int i, cor[n];
-  for(i=0;i<n;i++)
-    cor[i] = BRANCO;
+  int i, cor[n],  descoberta[n], tempo=0;
   for(i=0;i<n;i++){
-    if(cor[i]==PRETO) continue;
+    cor[i] = BRANCO;
+    descoberta[i] = -1;
+  }
+
+  for(i=0;i<n;i++){
+    if(cor[i]==PRETO) return 0;
     cor[i] = CINZA;
-    if (DFS(i, n, adj_matrix, cor) == 1) return 1;
+    if (DFS(i, n, adj_matrix, cor, tempo, descoberta) == 1) return 1;
   }
   return 0;
 }
