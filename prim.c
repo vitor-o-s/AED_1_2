@@ -1,6 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+#define N 100
+
+static int stack[N];
+static int last, first;
+
 typedef struct Edge{
   int value, weight;
   struct Edge* next;
@@ -16,6 +21,62 @@ typedef struct list{
   node* head;
   int n_vertex;
 }List;
+
+int unstack(int n, int chave[n]){
+
+  int menor = 10000, i, indice;
+
+  for ( i = first; i < last; i++) {
+    if (chave[i] < menor){
+      menor = chave[i];
+      indice = i;
+    }
+  }
+  int vertice = stack[indice];
+
+  if(indice == first) first++;
+  if(indice == last) last--;
+
+  if(indice != first && indice != last){
+    for ( i = indice; i < last; i++) {
+      stack[i] = stack[i + 1];
+    }
+    last--;
+  }
+
+  return vertice;
+}
+
+void stackup(int value){
+  stack[last++] = value;
+}
+
+int isvoid(void){
+  if(last = first) return 0;
+  return 1;
+  //return p >= u;
+}
+
+void createstack(void){
+   first = last = 0;
+}
+
+void printstack(void){
+  int i;
+  for(i = first; i < last; i++)
+    printf("%d\t", stack[i]);
+  printf("\n");
+}
+
+int Estack(int n){
+
+  int i;
+
+  for ( i = first; i < last; i++) {
+    if(stack[i] == n) return 1;
+  }
+  return 0;
+}
 
 void inicializa(List* l){
   l->head = NULL;
@@ -115,12 +176,40 @@ List* adj_list(List *l, int n, int matrix[n][n]){
   return l;
 }
 
-void prim(){
+void prim(int n, int root, int matrix[n][n]){
+
+  int pai[n], chave[n], i, u;
+
+  for (i = 0; i < n; i++){
+    pai[i] = -1;
+    chave[i] = 10000;
+  }
+  chave[0] = 0;
+  createstack();
+  for ( i = 0; i < n; i++) {
+    stackup(i);
+  }
+
+  while(isvoid() != 0){
+    u = unstack(n, chave); // alterar função para desempilhar menor chave
+    for ( i = 0; i < n; i++) {
+      if (matrix[u][i] != 0) {
+        if(Estack(i) == 1 && matrix[u][i] < chave[i]){
+          pai[i] = u;
+          chave[i] = matrix[u][i];
+        }
+      }
+    }
+  }
 
   printf("0: -\n");
+  for (i = 1; i < n; i++) {
+    printf("%d: %d\n",i,pai[i]);
+  }
 }
 
 int main(void) {
+
   int i, j, n;
   scanf(" %d",&n);
   int adj_matrix[n][n];
@@ -130,11 +219,16 @@ int main(void) {
     }
   }
 
-  List *L = (List*) malloc (sizeof(List));
-  inicializa(L);
+  //List *L = (List*) malloc (sizeof(List));
+  //List *arvore_geradora = (List *) malloc (sizeof(List));
+  //inicializa(L);
+  //inicializa(arvore_geradora);
 
-  L = adj_list(L, n, adj_matrix);
-  imprimirGrafo(L);
+  //L = adj_list(L, n, adj_matrix);
+  //imprimirGrafo(L);
+  //arvore_geradora =
+  printf("leu");
+  prim(n, 0, adj_matrix);
 
   return 0;
 }
