@@ -52,7 +52,7 @@ void stackup(int value){
 }
 
 int isvoid(void){
-  if(last = first) return 0;
+  if(last == first) return 0;
   return 1;
   //return p >= u;
 }
@@ -78,6 +78,7 @@ int Estack(int n){
   return 0;
 }
 
+/*
 void inicializa(List* l){
   l->head = NULL;
 }
@@ -176,6 +177,8 @@ List* adj_list(List *l, int n, int matrix[n][n]){
   return l;
 }
 
+*/
+
 void prim(int n, int root, int matrix[n][n]){
 
   int pai[n], chave[n], i, u;
@@ -189,6 +192,8 @@ void prim(int n, int root, int matrix[n][n]){
   for ( i = 0; i < n; i++) {
     stackup(i);
   }
+
+
 
   while(isvoid() != 0){
     u = unstack(n, chave); // alterar função para desempilhar menor chave
